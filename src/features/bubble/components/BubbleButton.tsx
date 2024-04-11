@@ -16,9 +16,24 @@ export const BubbleButton = (props: Props) => {
   return (
     <button
       part="button"
-      onClick={() => props.toggleBot()}
+      onClick={() => {
+        props.toggleBot() 
+
+        const chatbotContainer = document.getElementsByClassName('chatbot-button-container')[0];
+        const chatbotInputContainer = document.getElementsByClassName('chatbot-input')[0]; 
+        const chatbotInput: HTMLInputElement | null = chatbotInputContainer.querySelector('input');
+
+       // Use 'click' on the chatbotContainer
+        chatbotContainer.addEventListener('click', (event: Event) => { 
+           if (chatbotInput && event.target !== chatbotInput) {
+            (event as MouseEvent).preventDefault(); 
+        }
+        
+       });    
+      }}
+
       class={
-        `fixed shadow-md rounded-full hover:scale-110 active:scale-95 transition-transform duration-200 flex justify-center items-center animate-fade-in` +
+        `fixed shadow-md rounded-full hover:scale-110 active:scale-95 transition-transform duration-200 flex justify-center items-center animate-fade-in chatbot-button-container` +
         (props.size === 'large' ? ' w-16 h-16' : ' w-12 h-12')
       }
       style={{
